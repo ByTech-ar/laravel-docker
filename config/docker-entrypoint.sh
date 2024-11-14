@@ -31,6 +31,11 @@ if [ "$ENABLE_LARAVEL_WORKER" = "1" ]; then
     cp /etc/supervisor.d/worker.disable /etc/supervisor.d/worker.conf
 fi
 
+# Habilitar trabajadores de cola de Laravel
+if [ "$ENABLE_OCTANE" = "1" ]; then
+    cp /etc/supervisor.d/octane.disable /etc/supervisor.d/octane.conf
+fi
+
 
 # Corregir permisos del directorio /app/storage/
 if [ -d "/app/storage/" ]; then
