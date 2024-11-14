@@ -22,12 +22,13 @@ RUN apk update && apk add --no-cache \
     libjpeg-turbo-dev \
     libpng-dev \
     icu-dev \
+    mariadb-connector-c-dev \
     $PHPIZE_DEPS
 
 
 # Configurar e instalar las extensiones GD, pcntl , zip , intl
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd pcntl zip intl \
+    && docker-php-ext-install gd pcntl zip intl pdo_mysql \
     && pecl install redis \
     && docker-php-ext-enable redis \
     && apk del $PHPIZE_DEPS
