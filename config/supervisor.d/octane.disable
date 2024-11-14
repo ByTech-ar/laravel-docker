@@ -1,0 +1,11 @@
+[program:octane]
+command=php /app/artisan octane:start --server=frankenphp --host=0.0.0.0 --port=80 --admin-port=2019 --log-level=info
+directory=/app/
+autostart=true
+autorestart=true
+stdout_logfile=/dev/stdout
+stdout_logfile_maxbytes=0
+stderr_logfile=/dev/stderr
+stderr_logfile_maxbytes=0
+user=www-data
+environment=APP_ENV="production",APP_DEBUG="false"
