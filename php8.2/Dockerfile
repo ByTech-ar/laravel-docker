@@ -25,10 +25,12 @@ RUN apk update && apk add --no-cache \
     $PHPIZE_DEPS
 
 
-
 # Configurar e instalar las extensiones GD, pcntl , zip , intl
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd pcntl zip intl
+    && docker-php-ext-install gd pcntl zip intl \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    && apk del $PHPIZE_DEPS
 
 # Remove Cache
 RUN rm -rf /var/cache/apk/*
