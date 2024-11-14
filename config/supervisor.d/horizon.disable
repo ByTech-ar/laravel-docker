@@ -1,0 +1,15 @@
+[group:laravel]
+programs=horizon
+priority=20
+
+[program:horizon]
+command=/usr/local/bin/php /app/artisan horizon
+process_name=%(program_name)s
+startsecs = 0
+user=www-data
+autostart = true
+autorestart = true
+stdout_logfile=/dev/stdout
+stdout_logfile_maxbytes=0
+stderr_logfile=/dev/stderr
+stderr_logfile_maxbytes=0

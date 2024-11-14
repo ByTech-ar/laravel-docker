@@ -1,0 +1,21 @@
+stages:
+  - build
+
+default:
+  image: docker:cli
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  after_script:
+    - docker push "$DOCKER_IMAGE_NAME"
+
+
+build_82:
+  stage: build
+  variables:
+    DOCKER_IMAGE_NAME: $CI_REGISTRY_IMAGE:php82
+  script:
+    - docker build -f ./php8.2/Dockerfile --pull -t "$DOCKER_IMAGE_NAME" .
+
+
