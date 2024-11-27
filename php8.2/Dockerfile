@@ -1,5 +1,5 @@
 # Set master image
-FROM php:8.2-fpm-alpine
+FROM dunglas/frankenphp:php8.2-alpine
 # docker run -it --rm php:8.4-fpm-alpine /bin/sh
 LABEL maintainer="Andres Lacquaniti (hal@caseroft.com.ar)"
 
@@ -14,7 +14,6 @@ RUN apk update && apk add --no-cache \
     zip \
     unzip \
     curl \
-    nginx \
     supervisor \
     figlet \
     bash  \
@@ -34,6 +33,7 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-enable redis \
     && apk del $PHPIZE_DEPS
 
+
 # Remove Cache
 RUN rm -rf /var/cache/apk/*
 
@@ -42,14 +42,6 @@ RUN rm -rf /var/cache/apk/*
 COPY config/supervisord.conf /etc/supervisord.conf
 COPY config/supervisor.d/* /etc/supervisor.d/
 
-#Copio Archivo de Nginx
-COPY config/nginx/default.conf /etc/nginx/http.d/default.conf
-
-
-# Creo directorio de Nginx y ajusto permisos
-RUN mkdir -p /run/nginx/ \
-    && chown www-data:www-data /run/nginx/ \
-    && chown -R www-data:www-data /var/lib/nginx/
 
 
 ## Cargoe el phpInfo -> el archivo se rescribe cunado se sube el laravel.
@@ -68,8 +60,6 @@ EXPOSE 80
 
 # Variables de entorno
 ENV ENABLE_CRON 0
-ENV ENABLE_NGINX 1
-ENV ENABLE_PHP_FPM 1
+ENV ENABLE_OCTANE 0
 ENV ENABLE_LARAVEL_HORIZON 0
 ENV ENABLE_LARAVEL_WORKER 0
-ENV ENABLE_OCTANE 0
