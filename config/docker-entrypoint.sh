@@ -38,7 +38,8 @@ fi
 
 # Corregir permisos del directorio /app/storage/
 if [ -d "/app/storage/" ]; then
-    chown www-data:www-data -R /app/storage/
+    #chown www-data:www-data -R /app/storage/
+    chown www-data:www-data /app/storage/
 fi
 
 # Ejecutar comandos de Artisan si existe el archivo /app/artisan
