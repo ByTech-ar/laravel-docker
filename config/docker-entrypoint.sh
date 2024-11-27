@@ -7,7 +7,6 @@ mv /etc/supervisor.d/cron.conf /etc/supervisor.d/cron.conf
 
 
 # Habilitar servicios según las variables de entorno
-
 # Habilitar el cron de Laravel
 if [ "$ENABLE_CRON" = "1" ]; then
     echo "* * * * * php /app/artisan schedule:run >> /dev/null 2>&1" >> /etc/crontabs/www-data

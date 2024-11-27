@@ -17,7 +17,7 @@ build_82:
     DOCKER_IMAGE_NAME: $CI_REGISTRY_IMAGE:php82
   script:
     #- docker build -f ./php8.2/Dockerfile --pull -t "$DOCKER_IMAGE_NAME" .
-    - docker build -f ./php8.2/dockerfile --pull -t "$DOCKER_IMAGE_NAME" --platform linux/amd64  .
-    - docker build -f ./php8.2/dockerfile --pull -t "$DOCKER_IMAGE_NAME" --platform linux/arm64  .
+    - docker build -f ./php8.2/Dockerfile --pull -t "$DOCKER_IMAGE_NAME" --platform linux/amd64  .
+    - docker build -f ./php8.2/Dockerfile --pull -t "$DOCKER_IMAGE_NAME" --platform linux/arm64  .
 
 
