@@ -51,6 +51,7 @@ if [ -f "/app/artisan" ]; then
     php artisan config:clear
     php artisan route:clear
     php artisan view:clear
+	php artisan db:seed --force
     php artisan about
 fi
 
