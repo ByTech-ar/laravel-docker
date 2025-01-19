@@ -16,9 +16,13 @@ build_82:
   variables:
     DOCKER_IMAGE_NAME: $CI_REGISTRY_IMAGE:php82
   script:
-    #- docker build -f ./php8.2/Dockerfile --pull -t "$DOCKER_IMAGE_NAME" .
-    #- docker build -f ./php8.2/Dockerfile --pull -t "$DOCKER_IMAGE_NAME" --platform linux/amd64  .
-    #- docker build -f ./php8.2/Dockerfile --pull -t "$DOCKER_IMAGE_NAME" --platform linux/arm64  .
     - docker buildx create --use
     - docker buildx build --platform linux/amd64,linux/arm64 -f ./php8.2/Dockerfile --pull -t "$DOCKER_IMAGE_NAME" --push .
 
+build_84:
+  stage: build
+  variables:
+    DOCKER_IMAGE_NAME: $CI_REGISTRY_IMAGE:php84
+  script:
+    - docker buildx create --use
+    - docker buildx build --platform linux/amd64,linux/arm64 -f ./php8.4/Dockerfile --pull -t "$DOCKER_IMAGE_NAME" --push .
