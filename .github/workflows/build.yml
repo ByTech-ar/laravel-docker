@@ -25,9 +25,9 @@ jobs:
       - name: Build and push PHP 8.2 image
         run: |
           docker buildx create --use
-          docker buildx build --platform linux/amd64,linux/arm64 -f ./php8.2/Dockerfile --pull -t ghcr.io/${{ github.repository }}:php82 --push .
+          docker buildx build --platform linux/amd64,linux/arm64 -f ./php8.2/Dockerfile --pull -t ghcr.io/bytech-ar/laravel-docker:php82 --push .
 
       - name: Build and push PHP 8.4 image
         run: |
           docker buildx create --use
-          docker buildx build --platform linux/amd64,linux/arm64 -f ./php8.4/Dockerfile --pull -t ghcr.io/${{ github.repository }}:php84 --push .
+          docker buildx build --platform linux/amd64,linux/arm64 -f ./php8.4/Dockerfile --pull -t ghcr.io/bytech-ar/laravel-docker:php84 --push .
