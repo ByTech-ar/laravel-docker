@@ -1,4 +1,4 @@
-name: Build Docker Images
+name: Build and Push Docker Images to GHCR
 
 on:
   push:
@@ -18,16 +18,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Log in to Docker Registry
+      - name: Log in to GitHub Container Registry
         run: |
-          echo "${{ secrets.DOCKER_REGISTRY_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_REGISTRY_USER }}" --password-stdin "${{ secrets.DOCKER_REGISTRY }}"
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build and push PHP 8.2 image
         run: |
           docker buildx create --use
-          docker buildx build --platform linux/amd64,linux/arm64 -f ./php8.2/Dockerfile --pull -t "${{ secrets.DOCKER_REGISTRY_IMAGE }}:php82" --push .
+          docker buildx build --platform linux/amd64,linux/arm64 -f ./php8.2/Dockerfile --pull -t ghcr.io/${{ github.repository }}:php82 --push .
 
       - name: Build and push PHP 8.4 image
         run: |
           docker buildx create --use
-          docker buildx build --platform linux/amd64,linux/arm64 -f ./php8.4/Dockerfile --pull -t "${{ secrets.DOCKER_REGISTRY_IMAGE }}:php84" --push .
+          docker buildx build --platform linux/amd64,linux/arm64 -f ./php8.4/Dockerfile --pull -t ghcr.io/${{ github.repository }}:php84 --push .
