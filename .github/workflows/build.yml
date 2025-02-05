@@ -1,0 +1,33 @@
+name: Build Docker Images
+
+on:
+  push:
+    branches:
+      - main  # Cambia esto según la rama que desees activar el pipeline
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      docker:
+        image: docker:dind
+        options: --privileged
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Registry
+        run: |
+          echo "${{ secrets.DOCKER_REGISTRY_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_REGISTRY_USER }}" --password-stdin "${{ secrets.DOCKER_REGISTRY }}"
+
+      - name: Build and push PHP 8.2 image
+        run: |
+          docker buildx create --use
+          docker buildx build --platform linux/amd64,linux/arm64 -f ./php8.2/Dockerfile --pull -t "${{ secrets.DOCKER_REGISTRY_IMAGE }}:php82" --push .
+
+      - name: Build and push PHP 8.4 image
+        run: |
+          docker buildx create --use
+          docker buildx build --platform linux/amd64,linux/arm64 -f ./php8.4/Dockerfile --pull -t "${{ secrets.DOCKER_REGISTRY_IMAGE }}:php84" --push .
